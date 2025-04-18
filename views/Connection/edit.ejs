@@ -1,0 +1,112 @@
+<%- include('../partials/header.ejs') %>
+
+
+    <!-- Form to make a new connection -->
+    <div class="connection-main">
+        <h1 style="margin-top: 20px; margin-left: 50px; margin: 50px;">Edit Connection</h1>
+        <form action="/connections/<%=connection._id%>?_method=PUT" method="POST" class="container connection-form">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Topic</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="topic" value="<%=connection.topic%>" class="form-control" id="inputTopic" required>
+                    </div>
+                </div>  
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Title</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="title" value="<%=connection.title %>" class="form-control" id="inputTitle" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Host</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="host" value="<%=connection.host %>" class="form-control" id="inputHost" required>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Details</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="details" value="<%=connection.details %>" class="form-control" id="inputDetails" required>
+                    </div>
+                </div>
+            </div>
+
+           <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Where</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="place" value="<%=connection.place %>" class="form-control" id="inputWhere" required>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">When</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="date" name="when" value="<%=connection.when %>" class="form-control" id="inputWhen">
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Start</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="datetime-local" name="startTime" value="<%=connection.startTime %>" class="form-control" id="inputStart" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">End</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="datetime-local" name="endTime" value="<%=connection.endTime %>" class="form-control" id="inputEnd" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Image</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="image" value="<%=connection.image %>" class="form-control" id="inputImage" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="create-connection-btn">Update Connection</button>
+          </form>
+    </div>
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
