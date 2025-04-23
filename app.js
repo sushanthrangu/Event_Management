@@ -16,7 +16,7 @@ require('dotenv').config();
 //configure app
 const app=express();
 let port=process.env.PORT || 8080;
-let host='localhost';
+let host='0.0.0.0';
 let url = process.env.MONGODB_URI;
 app.set('view engine','ejs');
 
