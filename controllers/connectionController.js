@@ -1,4 +1,4 @@
-const model = require('../models/connection')
+const model = require('../models/Connection')
 const rsvpModel = require('../models/rsvp');
 const{DateTime} = require('luxon')
 
