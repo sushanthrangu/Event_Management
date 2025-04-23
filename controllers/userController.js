@@ -1,5 +1,5 @@
 const model = require('../models/user');
-const Connection = require('../models/connection');
+const Connection = require('../models/Connection');
 const rsvpModel = require('../models/rsvp');
 exports.new = (req, res)=>{
     console.log("Sign Up Page");
