@@ -8,7 +8,7 @@ const userRoutes = require('./routes/userRoutes');
 const model = require('./models/user')
 const methodOverride = require('method-override');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo'); 
 const flash = require('connect-flash');
 require('dotenv').config();
 
