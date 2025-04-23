@@ -1,4 +1,4 @@
-const Connection = require('../models/connection');
+const Connection = require('../models/Connection');
 
 //check if user is a guest
 exports.isGuest = (req, res, next)=>{
