@@ -10,17 +10,22 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
+require('dotenv').config();
 
 
 //configure app
 const app=express();
 let port=8080;
 let host='localhost';
-let url = 'mongodb+srv://admin:admin123@cluster0.4hn1q.mongodb.net/nbad-project3?retryWrites=true&w=majority&appName=Cluster0';
+let url = process.env.MONGODB_URI;
 app.set('view engine','ejs');
 
 //connext to MongoDB
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  
 .then(()=>{
     //start the server
     app.listen(port, host, ()=>{
@@ -34,7 +39,7 @@ app.use(
         secret: "ajfeirf90aeu9eroejfoefj",
         resave: false,
         saveUninitialized: false,
-        store: new MongoStore({mongoUrl: 'mongodb+srv://admin:admin123@cluster0.4hn1q.mongodb.net/nbad-project3?retryWrites=true&w=majority&appName=Cluster0'}),
+        store: new MongoStore({mongoUrl: process.env.MONGODB_URI}),
         cookie: {maxAge: 60*60*1000}
         })
 );
