@@ -1,0 +1,202 @@
+<footer>
+    <div class="row footer justify-content-center align-items-center ">
+        <div class="col-sm-2">
+            @GatherTales
+        </div>
+        <div class="col-sm-1">
+            <a href="/about">About</a>
+        </div>
+        <div class="col-sm-1">
+            <a href="/contact">Contact</a>
+        </div>
+        <div class="col-sm-1">
+            Info
+        </div>
+        <div class="col-sm-2">
+            
+                <i class="fab fa-twitter"></i>
+            
+            
+                <i class="fab fa-facebook-f"></i>
+           
+        </div>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" ></script>
+<!-- Floating Support Chat Widget -->
+<style>
+    .support-toggle-btn {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: #007b7f;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      z-index: 9999;
+    }
+  
+    .support-chat-widget {
+      position: fixed;
+      right: 24px;
+      bottom: 84px;
+      width: 320px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+  
+    .support-chat-widget.hidden {
+      display: none;
+    }
+  
+    .support-chat-header {
+      background: #007b7f;
+      color: #fff;
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .support-chat-header button {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  
+    .support-chat-log {
+      padding: 8px;
+      background: #f7f7f7;
+      flex: 1;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+  
+    .support-chat-input-row {
+      display: flex;
+      border-top: 1px solid #eee;
+    }
+  
+    .support-chat-input-row input {
+      flex: 1;
+      border: none;
+      padding: 8px;
+      font-size: 14px;
+    }
+  
+    .support-chat-input-row input:focus {
+      outline: none;
+    }
+  
+    .support-chat-input-row button {
+      border: none;
+      background: #007b7f;
+      color: #fff;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+  </style>
+  
+  <div id="support-chat-widget" class="support-chat-widget hidden">
+    <div class="support-chat-header">
+      <span>Event Assistant</span>
+      <button id="support-close-btn" type="button">×</button>
+    </div>
+    <div id="support-chat-log" class="support-chat-log"></div>
+    <div class="support-chat-input-row">
+      <input id="support-input" type="text" placeholder="Ask about events, login, etc..." />
+      <button id="support-send-btn" type="button">Send</button>
+    </div>
+  </div>
+  
+  <button id="support-toggle-btn" class="support-toggle-btn">
+    💬
+  </button>
+  
+  <script>
+    const toggleBtn = document.getElementById("support-toggle-btn");
+    const chatWidget = document.getElementById("support-chat-widget");
+    const closeBtn = document.getElementById("support-close-btn");
+    const chatLog = document.getElementById("support-chat-log");
+    const inputEl = document.getElementById("support-input");
+    const sendBtn = document.getElementById("support-send-btn");
+  
+    function appendMessage(type, text) {
+      const div = document.createElement("div");
+      if (type === "user") {
+        div.style.fontWeight = "600";
+        div.textContent = "You: " + text;
+      } else {
+        div.style.marginLeft = "8px";
+        div.textContent = "Bot: " + text;
+      }
+      chatLog.appendChild(div);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+  
+    async function sendQuestion() {
+      const question = inputEl.value.trim();
+      if (!question) return;
+  
+      appendMessage("user", question);
+      inputEl.value = "";
+      appendMessage("bot", "Thinking...");
+  
+      try {
+        const res = await fetch("/api/support", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ question })
+        });
+  
+        const data = await res.json();
+        chatLog.removeChild(chatLog.lastChild); // remove "Thinking..."
+  
+        if (res.ok) {
+          appendMessage("bot", data.answer || "(no answer)");
+        } else {
+          appendMessage("bot", "Error: " + (data.error || "Something went wrong"));
+        }
+      } catch (err) {
+        chatLog.removeChild(chatLog.lastChild);
+        appendMessage("bot", "Error: " + err.message);
+      }
+    }
+  
+    toggleBtn.addEventListener("click", () => {
+      chatWidget.classList.toggle("hidden");
+    });
+  
+    closeBtn.addEventListener("click", () => {
+      chatWidget.classList.add("hidden");
+    });
+  
+    sendBtn.addEventListener("click", sendQuestion);
+  
+    inputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendQuestion();
+      }
+    });
+  </script>
+  
+</body>
+</html>

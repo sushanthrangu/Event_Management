@@ -1,0 +1,51 @@
+<%- include('../partials/header.ejs') %>
+
+    <!-- Main Content -->
+    <div class="event-details">
+        <div class="heading1">
+            <h2><%= connection.title%></h2>
+            <% if(user == connection.host._id){%>
+            <div class="buttons">
+                <form>
+                <button class="btn" id="update-btn" type="submit" formmethod="get" formaction="/connections/<%=connection.id%>/edit"> &#x270F;&#xFE0F; </button>
+                <button class="btn" id="delete-btn" type="submit" formmethod="post" formaction="/connections/<%=connection.id%>?_method=DELETE">&#x1F5D1;</button>
+                </form>
+            </div>
+            <%}else{%>
+                <div class="buttons">
+                    <form class="rsvp">
+                        <% if(rsvps.length > 0) { %>
+                            <div class="caption">
+                            <caption><%= rsvps.length %> people are going</caption>
+                           </div>
+                            <% } %>
+                        <button class="btn" id="yes-btn" type="submit" formmethod="post" formaction="/connections/<%=connection.id%>/rsvp" name="rsvp" value="Yes">Yes</button>
+                        <button class="btn" id="no-btn" type="submit" formmethod="post" formaction="/connections/<%=connection.id%>/rsvp" name="rsvp" value="No">No</button>
+                        <button class="btn" id="maybe-btn" type="submit" formmethod="post" formaction="/connections/<%=connection.id%>/rsvp" name="rsvp" value="Maybe">Maybe</button>
+                    </form>
+                </div>
+            <%}%>
+        </div>
+        <div class="event-Details">
+            <div class="img2">
+            <img class="float-image" src="<%=connection.image%>" alt="">
+            </div>
+            <div class="info">
+                <div>
+                    <p style="font-weight: bold;font-size: large;">Hosted by <%=connection.host.firstName + ' ' + connection.host.lastName%></p>
+                    <p>Start Date: <%=connection.startTime%></p>
+                    <p>End Date: <%= connection.endTime %></p>
+                    <p>Venue: <%=connection.place%></p>
+                </div>
+            </div>
+        </div>
+        <div class="ext-details">
+            <p>Details: <%= connection.details %></p>
+        </div>
+        
+    </div>
+
+    
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>

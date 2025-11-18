@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %> | Event Management</title>
+    <style>
+      .chat-container {
+        max-width: 700px;
+        margin: 2rem auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: Arial, sans-serif;
+      }
+      .chat-log {
+        border: 1px solid #eee;
+        border-radius: 6px;
+        padding: 0.75rem;
+        height: 300px;
+        overflow-y: auto;
+        background: #fafafa;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        white-space: pre-wrap;
+      }
+      .chat-msg-user { font-weight: 600; margin-top: 0.5rem; }
+      .chat-msg-bot { margin-left: 0.75rem; margin-top: 0.25rem; }
+      .chat-input-row { display: flex; gap: 0.5rem; }
+      .chat-input-row textarea {
+        flex: 1;
+        resize: vertical;
+      }
+      button {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <h2>Event Site Assistant</h2>
+      <p>Ask me about creating events, viewing events, or login/registration issues.</p>
+
+      <div id="chat-log" class="chat-log"></div>
+
+      <div class="chat-input-row">
+        <textarea id="question" rows="3" placeholder="Type your question..."></textarea>
+        <button id="send-btn">Send</button>
+      </div>
+
+      <p id="status" style="margin-top: 0.5rem; font-size: 0.85rem;"></p>
+    </div>
+
+    <script>
+      const chatLog = document.getElementById("chat-log");
+      const questionInput = document.getElementById("question");
+      const sendBtn = document.getElementById("send-btn");
+      const statusEl = document.getElementById("status");
+
+      function appendMessage(type, text) {
+        const divUser = document.createElement("div");
+        if (type === "user") {
+          divUser.className = "chat-msg-user";
+          divUser.textContent = "You: " + text;
+        } else {
+          divUser.className = "chat-msg-bot";
+          divUser.textContent = "Bot: " + text;
+        }
+        chatLog.appendChild(divUser);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+
+      async function sendQuestion() {
+        const question = questionInput.value.trim();
+        if (!question) return;
+
+        appendMessage("user", question);
+        questionInput.value = "";
+        statusEl.textContent = "Thinking...";
+
+        try {
+          const res = await fetch("/api/support", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ question })
+          });
+
+          const data = await res.json();
+          if (res.ok) {
+            appendMessage("bot", data.answer || "(no answer)");
+          } else {
+            appendMessage("bot", "Error: " + (data.error || "Something went wrong"));
+          }
+        } catch (err) {
+          appendMessage("bot", "Error: " + err.message);
+        } finally {
+          statusEl.textContent = "";
+        }
+      }
+
+      sendBtn.addEventListener("click", sendQuestion);
+      questionInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendQuestion();
+        }
+      });
+    </script>
+  </body>
+</html>

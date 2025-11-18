@@ -1,0 +1,124 @@
+<%- include('../partials/header.ejs') %>
+
+
+    <!-- Form to make a new connection -->
+    <div class="connection-main">
+        <h1 >New Registration</h1>
+        <form action="/connections" enctype="multipart/form-data" method="POST" class="container connection-form">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                       
+                        <label for="event">Topic</label>
+                        
+                    </div>
+                    <div class="col-md-9">
+                        <select name="topic" id="Topic" required>
+                            <option value=" disabled selected">Select</option>
+                            <option value="Innovation Zone">Innovation Zone</option>
+                            <option value="Dusk-to-Dawn Events">Dusk-to-Dawn Events</option>
+                            <option value="Marathon">Marathon</option>
+                            <option value="Arts">Arts</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>  
+            </div>
+            
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Title</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="title" class="form-control" id="inputTitle" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Host</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="host" class="form-control" id="inputHost" required>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Details</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="details" class="form-control" id="inputDetails" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Where</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="place" class="form-control" id="inputWhere" required>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">When</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="date" name="when" class="form-control" id="inputWhen" required>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Start</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="datetime-local" name="startTime" class="form-control" id="inputStart" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">End</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="datetime-local" name="endTime" class="form-control" id="inputEnd" required>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label class="form-label">Image</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="file" name="image" class="form-control" id="inputImage" required >
+                    </div>
+                </div>
+            </div>
+
+            <button  class= "btn-primary" id="register-btn">Register for new Event</button>
+          </form>
+    </div>
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>

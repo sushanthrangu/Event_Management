@@ -1,0 +1,29 @@
+<%- include('../partials/header.ejs') %>
+
+    <div class="main1">
+        <%if(topics.length!==0){%>
+        <%for(let i=0;i<topics.length;i++){ %>
+            <div class="containerconnection">
+                <h3><%=topics[i]%></h3> 
+                <ul>
+            <%connections.forEach(connection=>{ %> 
+                <%if(connection.topic === topics[i]){%>
+                
+                    <li><a href="/connections/<%=connection.id%>"><%=connection.title%></a></li> <br>
+                    
+                <%}%>
+            <%});%>
+                </ul>
+            </div>
+            <br>
+        <%}%>
+        <%} else{%>
+            <br>
+            <p class="container connection">There are no connections to display</p>
+        <%}%>
+    </div>
+
+
+    
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
