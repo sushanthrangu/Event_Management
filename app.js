@@ -14,8 +14,7 @@ const supportRoutes = require('./routes/supportRoutes');
 
 //configure app
 const app=express();
-let port=8080;
-let host='localhost';
+const port = process.env.PORT || 8080;
 let url = 'mongodb+srv://admin:admin123@cluster0.4hn1q.mongodb.net/nbad-project3?retryWrites=true&w=majority&appName=Cluster0';
 app.set('view engine','ejs');
 
@@ -23,7 +22,7 @@ app.set('view engine','ejs');
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(()=>{
     //start the server
-    app.listen(port, host, ()=>{
+    app.listen(port, ()=>{
     console.log('Server is running on port', port);
 })
 })
