@@ -15,7 +15,7 @@ const supportRoutes = require('./routes/supportRoutes');
 //configure app
 const app=express();
 const port = process.env.PORT || 8080;
-let url = 'mongodb+srv://admin:admin123@cluster0.4hn1q.mongodb.net/nbad-project3?retryWrites=true&w=majority&appName=Cluster0';
+const url = process.env.MONGODB_URI;
 app.set('view engine','ejs');
 
 //connext to MongoDB
