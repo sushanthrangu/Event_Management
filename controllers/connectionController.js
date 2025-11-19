@@ -51,7 +51,7 @@ exports.show = (req,res,next)=>{
 };
 
 exports.new = (req,res)=>{
-    res.render('./Connection/newConnection');
+    res.render('./Connection/newconnection');
 };
 
 exports.create = (req,res,next)=>{
