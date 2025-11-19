@@ -16,7 +16,7 @@ exports.index = (req,res)=>{
                 j++;
             }
         }
-        res.render('./connection/connections',{connections: connections, topics: topics});
+        res.render('./Connection/Connections',{connections: connections, topics: topics});
     })
     .catch(err=>next(err));
 };
@@ -39,7 +39,7 @@ exports.show = (req,res,next)=>{
         if(connection){
             //console.log(connection.id);
             let isAuthor = req.session.user == connection.host._id;
-            return res.render('./connection/connection',{connection, isAuthor, rsvps});
+            return res.render('./Connection/Connection',{connection, isAuthor, rsvps});
         }
         else{
             let err = new Error('Cannot find the connection with id '+ id);
@@ -51,7 +51,7 @@ exports.show = (req,res,next)=>{
 };
 
 exports.new = (req,res)=>{
-    res.render('./connection/newConnection');
+    res.render('./Connection/newConnection');
 };
 
 exports.create = (req,res,next)=>{
@@ -68,7 +68,7 @@ exports.create = (req,res,next)=>{
     connection.save()
     .then(connection=>{
         req.flash('success', 'Connection has been created successfully');
-        res.redirect('./connections')
+        res.redirect('./Connections')
     })
     .catch(err=>{
         if(err.name==='ValidationError')
@@ -103,7 +103,7 @@ exports.edit = (req,res,next)=>{
             
 
             req.flash('success', 'Connection has been edited successfully');
-            res.render('./connection/edit',{connection: connection});
+            res.render('./Connection/edit',{connection: connection});
  
         }
  
@@ -133,7 +133,7 @@ exports.update = (req,res,next)=>{
         if(connection)
         {
             req.flash('success', 'Connection has been updated successfully');
-            res.redirect('/connections/'+id);
+            res.redirect('/Connections/'+id);
         }
         else{
 
@@ -152,14 +152,14 @@ exports.delete = (req,res,next)=>{
 
     Promise.all([
         model.findByIdAndDelete(id),
-        rsvpModel.deleteMany({connection: id})
+        rsvpModel.deleteMany({Connection: id})
       ])
     .then(results=>{
         const[connection,rsvp]=results;
         if(connection && rsvp)
         {
             req.flash('success', 'Connection has been deleted successfully');
-            res.redirect('/connections');
+            res.redirect('/Connections');
         }
         else
         {
